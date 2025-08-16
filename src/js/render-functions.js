@@ -34,7 +34,6 @@ export function createGallery(images){
     </li>`
     )
     .join('');
-  //  refs.galleryElem.innerHTML = markup;
   refs.galleryElem.insertAdjacentHTML("beforeend", markup)
 
    if (!simpleLightbox) {

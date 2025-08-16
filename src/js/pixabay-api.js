@@ -19,7 +19,6 @@ export async function getImagesByQuery(query, page) {
   });
   const url = `${BASE_URL}${END_POINT}?${params}`;
   return axios.get(url).then(response => {
-    // console.log(response.data.total);
     totalElem = response.data.total;
     return response.data.hits
   });
