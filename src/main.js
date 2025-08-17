@@ -58,9 +58,10 @@ refs.loadMore.addEventListener('click', async e => {
       message: `We're sorry, but you've reached the end of search results.`,
     });
   } else {
+     hideLoader();
     showLoadMoreButton();
   }
-  hideLoader();
+ 
   const cardElems = document.querySelectorAll('.gallery-item');
   const cardElem = cardElems[cardElems.length - 1];
   let rect = cardElem.getBoundingClientRect();
