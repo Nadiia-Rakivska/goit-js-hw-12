@@ -29,8 +29,9 @@ refs.formEl.addEventListener('submit', async e => {
   page = 1;
     showLoader();
   if (query.length !== 0) {
-    const images = await getImagesByQuery(query, page);
+   
     try {
+       const images = await getImagesByQuery(query, page);
             totalElem = images.totalHits;
             totalPage = Math.ceil(totalElem / perPage);
         if (images.hits.length > 0) {
@@ -71,8 +72,9 @@ refs.loadMore.addEventListener('click', async () => {
   page += 1;
   
 
-  const images = await getImagesByQuery(query, page);
    try {
+    
+  const images = await getImagesByQuery(query, page);
      if (images.hits.length > 0) {
        createGallery(images.hits);
      } 
