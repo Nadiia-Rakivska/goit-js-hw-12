@@ -43,10 +43,12 @@ refs.formEl.addEventListener('submit', async e => {
   e.target.reset();
 });
 refs.loadMore.addEventListener('click', async e => {
+
+    hideLoadMoreButton();
     showLoader();
   page += 1;
   
-  hideLoadMoreButton();
+
   const images = await getImagesByQuery(query, page);
   addToGallery(images.hits);
   
