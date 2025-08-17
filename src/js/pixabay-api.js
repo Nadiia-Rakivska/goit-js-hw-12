@@ -1,8 +1,7 @@
 import axios from 'axios';
-import { clearGallery, hideLoader, showLoader } from './render-functions';
 
 
-export let totalElem;
+
 export let perPage = 15;
 
 export async function getImagesByQuery(query, page) {
@@ -18,8 +17,10 @@ export async function getImagesByQuery(query, page) {
     per_page:perPage
   });
   const url = `${BASE_URL}${END_POINT}?${params}`;
-  return axios.get(url).then(response => {
-    totalElem = response.data.total;
-    return response.data.hits
-  });
+  try {
+    const { data } = await axios.get(url);
+    return data;
+  } catch (err) {
+    return err;
+  }
 }
