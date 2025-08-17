@@ -29,12 +29,34 @@ refs.formEl.addEventListener('submit', async e => {
   page = 1;
     showLoader();
   if (query.length !== 0) {
-  
     const images = await getImagesByQuery(query, page);
-    totalElem = images.totalHits;
-    totalPage = Math.ceil(totalElem / perPage);
-    addToGallery(images.hits);
- 
+    try {
+            totalElem = images.totalHits;
+            totalPage = Math.ceil(totalElem / perPage);
+        if (images.hits.length > 0) {
+          createGallery(images.hits);
+        } else {
+          iziToast.error({
+            message:
+              'Sorry, there are no images matching your search query. Please try again!',
+            position: 'topRight',
+            icon: 'error',
+            backgroundColor: '#ef4040',
+            iconColor: 'white',
+            messageColor: 'white',
+          });
+        }
+      } catch (error) {
+        iziToast.error({
+          message:
+            `Error: ${error}`,
+          position: 'topRight',
+          icon: 'error',
+          backgroundColor: '#ef4040',
+          iconColor: 'white',
+          messageColor: 'white',
+        });
+      }
   }
   if (totalPage > page) {
     showLoadMoreButton();
@@ -42,7 +64,7 @@ refs.formEl.addEventListener('submit', async e => {
      hideLoader();
   e.target.reset();
 });
-refs.loadMore.addEventListener('click', async e => {
+refs.loadMore.addEventListener('click', async () => {
 
     hideLoadMoreButton();
     showLoader();
@@ -50,7 +72,20 @@ refs.loadMore.addEventListener('click', async e => {
   
 
   const images = await getImagesByQuery(query, page);
-  addToGallery(images.hits);
+   try {
+     if (images.hits.length > 0) {
+       createGallery(images.hits);
+     } 
+   } catch {
+     iziToast.error({
+       message: 'Download error',
+       position: 'topRight',
+       icon: 'error',
+       backgroundColor: '#ef4040',
+       iconColor: 'white',
+       messageColor: 'white',
+     });
+   }
   
   if (totalPage <= page) {
     hideLoadMoreButton();
@@ -71,30 +106,4 @@ refs.loadMore.addEventListener('click', async e => {
   });
 });
 
-function addToGallery(images) {
-  try {
-    if (images.length > 0) {
-      createGallery(images);
-    } else {
-      iziToast.error({
-        message:
-          'Sorry, there are no images matching your search query. Please try again!',
-        position: 'topRight',
-        icon: 'error',
-        backgroundColor: '#ef4040',
-        iconColor: 'white',
-        messageColor: 'white',
-      });
-    }
-  } catch {
-    iziToast.error({
-      message:
-        'Sorry, there are no images matching your search query. Please try again!',
-      position: 'topRight',
-      icon: 'error',
-      backgroundColor: '#ef4040',
-      iconColor: 'white',
-      messageColor: 'white',
-    });
-  }
-}
+
