@@ -43,7 +43,7 @@ refs.formEl.addEventListener('submit', async e => {
     totalPage = Math.ceil(totalElem / perPage);
     if (images.hits.length > 0) {
       createGallery(images.hits);
-      if (images.hits.length > 0 && totalPage >= page) {
+      if (images.hits.length > 0 && totalPage > page) {
         showLoadMoreButton();
       }
    
@@ -83,7 +83,8 @@ refs.loadMore.addEventListener('click', async () => {
     totalPage = Math.ceil(totalElem / perPage);
     if (images.hits.length > 0) {
       createGallery(images.hits);
-       if (totalPage <= page) {
+       if (page>=totalPage) {
+         hideLoader();
          hideLoadMoreButton();
          iziToast.info({
            message: `We're sorry, but you've reached the end of search results.`,
